@@ -66,12 +66,14 @@ fi
 # ---- 4. SDK platforms & build-tools ----
 echo "[4/6] Installing Android platform 35 + build-tools 36.1.0..."
 echo "  This downloads approx 80 MB. Please wait..."
-if ! yes | "$SDK_DIR/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$SDK_DIR" \
-    "platforms;android-35" "build-tools;36.1.0" > /tmp/sdkmanager.log 2>&1; then
+# yes may get SIGPIPE (broken pipe) once sdkmanager closes stdin;
+# wrapping with || true prevents pipefail from masking sdkmanager's exit code
+(yes 2>/dev/null || true) | "$SDK_DIR/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$SDK_DIR" \
+    "platforms;android-35" "build-tools;36.1.0" > /tmp/sdkmanager.log 2>&1 || {
     echo "  ERROR: SDK install failed. See /tmp/sdkmanager.log"
     tail -20 /tmp/sdkmanager.log
     exit 1
-fi
+}
 echo "  SDK install complete."
 
 # ---- 5. QEMU wrapper scripts (aarch64 only) ----
