@@ -16,14 +16,30 @@ BUILD_TOOLS="$SDK_DIR/build-tools/36.1.0"
 
 ARCH=$(uname -m)
 if [ "$ARCH" = "aarch64" ]; then
-    AAPT2="/root/android-sdk/tools/bin/aapt2"
-    ZIPALIGN="/root/android-sdk/tools/bin/zipalign"
+    AAPT2="$SDK_DIR/tools/bin/aapt2"
+    ZIPALIGN="$SDK_DIR/tools/bin/zipalign"
 else
     AAPT2="$BUILD_TOOLS/aapt2"
     ZIPALIGN="$BUILD_TOOLS/zipalign"
 fi
 D8="$BUILD_TOOLS/d8"
 APKSIGNER="$BUILD_TOOLS/apksigner"
+
+# Validate
+MISSING=
+for t in "$PLATFORM" "$AAPT2" "$ZIPALIGN" "$D8" "$APKSIGNER"; do
+    [ -f "$t" ] && continue
+    MISSING="$MISSING $t"
+done
+if [ -n "$MISSING" ]; then
+    echo "ERROR: missing:$MISSING"
+    if [ "$ARCH" = "aarch64" ]; then
+        echo "  On aarch64, ensure setup.sh completed: sudo bash setup.sh"
+        echo "  The QEMU wrapper at $SDK_DIR/tools/bin/aapt2 must exist"
+    fi
+    echo "  Or set SDK_DIR if SDK is elsewhere: SDK_DIR=/path ./build.sh"
+    exit 1
+fi
 
 echo "=== Clean ==="
 rm -rf "$BUILD_DIR"
