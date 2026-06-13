@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_search"
+        android:actionLayout="@layout/search_view"
+        android:icon="@android:drawable/ic_menu_search"
+        android:showAsAction="always|collapseActionView"
+        android:title="Search" />
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:showAsAction="ifRoom"
+        android:title="Refresh" />
+    <item
+        android:id="@+id/action_extracted"
+        android:showAsAction="never"
+        android:title="Saved APKs location" />
+</menu>
