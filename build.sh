@@ -10,14 +10,20 @@ DEX_DIR="$BUILD_DIR/dex"
 APK_DIR="$BUILD_DIR/apk"
 CLASSES_DIR="$BUILD_DIR/classes"
 
-SDK_DIR="/root/android-sdk"
+SDK_DIR="${SDK_DIR:-/root/android-sdk}"
 PLATFORM="$SDK_DIR/platforms/android-35/android.jar"
 BUILD_TOOLS="$SDK_DIR/build-tools/36.1.0"
 
-AAPT2="/root/android-sdk/tools/bin/aapt2"
+ARCH=$(uname -m)
+if [ "$ARCH" = "aarch64" ]; then
+    AAPT2="/root/android-sdk/tools/bin/aapt2"
+    ZIPALIGN="/root/android-sdk/tools/bin/zipalign"
+else
+    AAPT2="$BUILD_TOOLS/aapt2"
+    ZIPALIGN="$BUILD_TOOLS/zipalign"
+fi
 D8="$BUILD_TOOLS/d8"
 APKSIGNER="$BUILD_TOOLS/apksigner"
-ZIPALIGN="/root/android-sdk/tools/bin/zipalign"
 
 echo "=== Clean ==="
 rm -rf "$BUILD_DIR"

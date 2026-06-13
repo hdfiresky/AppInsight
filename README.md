@@ -69,14 +69,11 @@ The project includes Gradle wrapper files for compatibility. Requires Internet f
 | Android SDK | platform 35, build-tools 36.1.0 | aapt2, zipalign |
 | QEMU user | (only on aarch64) | run x86_64 aapt2/zipalign |
 
-### SDK directory structure
+### SDK directory
 
-The build script expects SDK at `/root/android-sdk/`. Set `SDK_DIR` in `build.sh` to change.
-
-```
-/root/android-sdk/
-  platforms/android-35/android.jar
-  build-tools/36.1.0/{aapt2,d8,apksigner,zipalign,...}
+The build script expects SDK at `/root/android-sdk/`. Override with:
+```bash
+SDK_DIR=/path/to/sdk ./build.sh
 ```
 
 ## Project structure
