@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "androiddev",
+  "agent": {
+    "androiddev": {
+      "description": "Full-stack Android agent — creates projects, customizes code, builds APKs. Use for any Android task.",
+      "mode": "primary"
+    }
+  }
+}
